@@ -11,15 +11,17 @@ Depends on the `git` cookbook.
 
 Install nvm and node.js version 0.10.5.
 
-	# install nvm
-	include_recipe 'nvm'
+```ruby
+# install nvm
+include_recipe 'nvm'
 
-	# install node.js v0.10.5
-	nvm_install 'v0.10.5'  do
-		from_source false
-		alias_as_default true
-		action :create
-	end
+# install node.js v0.10.5
+nvm_install 'v0.10.5'  do
+	from_source false
+	alias_as_default true
+	action :create
+end
+```
 
 For more usage examples, have a look to the recipes in `test/cookbooks/nvm_test/recipes/`.
 
@@ -58,61 +60,72 @@ Install a node.js version from source or binaries
 
 Install from binary
 
-	nvm_install '0.10.5'  do
-		from_source false
-		alias_as_default true
-		action :create
-	end
+```ruby
+nvm_install '0.10.5'  do
+	from_source false
+	alias_as_default true
+	action :create
+end
+```
 
 Install from source
 
-	nvm_install '0.10.5'  do
-		from_source true
-		alias_as_default true
-		action :create
-	end
+```ruby
+nvm_install '0.10.5'  do
+	from_source true
+	alias_as_default true
+	action :create
+end
+```
 
 Install as user
 
-  nvm_install '0.10.5' do
-    user 'myuser'
-    group 'mygroup'
-    from_source false
-    alias_as_default true
-    action :create
-  end
+```ruby
+nvm_install '0.10.5' do
+  user 'myuser'
+  group 'mygroup'
+  from_source false
+  alias_as_default true
+  action :create
+end
+```
 
 Multiple user installs
 
-  nvm_install 'nvm for userone' do
-    version '0.10.5'
-    user 'userone'
-    group 'userone'
-    from_source false
-    alias_as_default true
-    action :create
-  end
+```ruby
+nvm_install 'nvm for userone' do
+  version '0.10.5'
+  user 'userone'
+  group 'userone'
+  from_source false
+  alias_as_default true
+  action :create
+end
+```
 
-  nvm_install 'nvm for usertwo' do
-    version '0.10.5'
-    user 'usertwo'
-    group 'usertwo'
-    from_source false
-    alias_as_default true
-    action :create
-  end
+```ruby
+nvm_install 'nvm for usertwo' do
+  version '0.10.5'
+  user 'usertwo'
+  group 'usertwo'
+  from_source false
+  alias_as_default true
+  action :create
+end
+```
 
 Nonstandard user home user install
 
-  nvm_install '0.10.5' do
-    user 'usertwo'
-    group 'usertwo'
-    user_home '/opt/usertwo'
-    from_source false
-    alias_as_default true
-    action :create
-  end
-
+```ruby
+nvm_install '0.10.5' do
+  user 'usertwo'
+  group 'usertwo'
+  user_home '/opt/usertwo'
+  from_source false
+  alias_as_default true
+  action :create
+end
+```
 
 
 ### nvm_alias_default
@@ -131,9 +144,11 @@ Use by default the given node.js version
 
 Use by default node.js version 0.10.0
 
-	nvm_alias_default '0.10.0'  do
-		action :create
-	end
+```ruby
+nvm_alias_default '0.10.0'  do
+	action :create
+end
+```
 
 ## Cookbook development
 
@@ -142,7 +157,9 @@ Everything is explained [here](https://github.com/hipsnip-cookbooks/cookbook-dev
 
 ## Test
 
-    bundle exec rake cookbook:full_test
+```bash
+bundle exec rake cookbook:full_test
+```
 
 ## Licence
 
