@@ -34,7 +34,8 @@ action :create do
   nvm_dir = new_resource.nvm_directory
 
   if user_install
-    user_home = new_resource.user_home || "/home/" + chef_nvm_user
+    nvm_dir_base = new_resource.user_home || "/home/" + chef_nvm_user
+    nvm_dir = nvm_dir_base + "/.nvm"
   end
 
   directory nvm_dir do
