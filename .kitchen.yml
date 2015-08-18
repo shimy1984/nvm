@@ -20,9 +20,9 @@ suites:
   run_list:
     - recipe[nvm_test::default]
     - recipe[minitest-handler]
-- name: nvm-install
+- name: nvm-install-global
   run_list:
-    - recipe[nvm_test::nvm_install]
+    - recipe[nvm_test::nvm_install_global]
     - recipe[minitest-handler]
 - name: nvm-alias-default
   run_list:
@@ -31,4 +31,8 @@ suites:
 - name: nvm-install-from-source
   run_list:
     - recipe[nvm_test::nvm_install_from_source]
+    - recipe[minitest-handler]
+- name: nvm-install-user
+  run_list:
+    - recipe[nvm_test::nvm_install_user]
     - recipe[minitest-handler]

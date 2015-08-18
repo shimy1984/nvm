@@ -22,8 +22,8 @@ default_action :create
 
 attribute :from_source, :kind_of => [TrueClass, FalseClass], :default => false
 attribute :alias_as_default, :kind_of => [TrueClass, FalseClass], :default => false
-attribute :user, :kind_of => String, :default => 'root'
-attribute :group, :kind_of => String, :default => 'root'
+attribute :user, :kind_of => String
+attribute :group, :kind_of => String
 attribute :user_install, :kind_of => [TrueClass, FalseClass], :default => false
 attribute :version, :kind_of => String, :name_attribute => true
 attribute :nvm_directory, :kind_of => String, :default => node['nvm']['directory']

@@ -20,21 +20,34 @@
 action :create do
 	from_source_message = new_resource.from_source ? ' from source' : ''
 	from_source_arg = new_resource.from_source ? '-s' : ''
-  user_install = false
+  user_home = new_resource.user_home
+  user_install = new_resource.user_install
   chef_nvm_user = 'root'
   chef_nvm_group = 'root'
-  user_home = '/root'
-
-  if new_resource.user && new_resource.user != 'root'
-    user_install = true
-    chef_nvm_user = new_resource.user
-    chef_nvm_group = new_resource.group || new_resource.user
-  end
-
   nvm_dir = new_resource.nvm_directory
 
-  if user_install
-    nvm_dir_base = new_resource.user_home || "/home/" + chef_nvm_user
+  # If this is a user install...
+  if new_resource.user
+    user_install = true
+
+    chef_nvm_user = new_resource.user
+    chef_nvm_group = new_resource.group || new_resource.user
+
+    # If the user is root, the home dir is non standard
+    if chef_nvm_user == 'root'
+      # If a user_home is defined for the root user, use that instead of the default root home location
+      if user_home
+        nvm_dir_base = user_home
+      else
+        # Otherwise use the standard
+        nvm_dir_base = '/root'
+        user_home = nvm_dir_base
+      end
+    else
+      # If the user is not root
+      nvm_dir_base = user_home || "/home/" + chef_nvm_user
+      user_home = nvm_dir_base
+    end
     nvm_dir = nvm_dir_base + "/.nvm"
   end
 
@@ -57,7 +70,8 @@ action :create do
     mode 0755
     cookbook 'nvm'
     variables ({
-      :nvm_dir => nvm_dir
+      :nvm_dir => nvm_dir,
+      :user_install => user_install
     })
   end
 
@@ -78,6 +92,7 @@ action :create do
 	nvm_alias_default new_resource.version do
     user chef_nvm_user
     group chef_nvm_group
+    user_home user_home
     nvm_directory nvm_dir
 		action :create
 		only_if { new_resource.alias_as_default }

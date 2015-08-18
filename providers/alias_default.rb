@@ -18,12 +18,29 @@
 #
 
 action :create do
+  global_install = false
+  user = new_resource.user
+  group = new_resource.group
+  user_home = new_resource.user_home
+  if !new_resource.user
+    global_install = true
+    user = 'root'
+  end
+
+  if !new_resource.group
+    group = 'root'
+  end
+
+  if !new_resource.user_home
+    user_home = '/root'
+  end
+
 	script "Alias default node.js version to #{new_resource.version}..." do
     interpreter 'bash'
     flags '-l'
     user user
     group group
-    environment Hash[ 'HOME' => new_resource.nvm_directory ]
+    environment Hash[ 'HOME' => user_home ]
 		code <<-EOH
       export NVM_DIR=#{new_resource.nvm_directory}
 			#{node['nvm']['source']}
