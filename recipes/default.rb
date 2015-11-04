@@ -22,12 +22,14 @@ include_recipe 'git'
 ############################################################################
 # Install dependencies
 
-package 'libcurl3' do
-  action :install
-end
-
-package 'curl' do
-  action :install
+if node['nvm']['install_curl_deps_to_build_from_source']
+  package 'libcurl3' do
+    action :install
+  end
+  
+  package 'curl' do
+    action :install
+  end
 end
 
 if node['nvm']['install_deps_to_build_from_source']
